@@ -1,1 +1,4 @@
-# Write it!
+Performance/PreferSizeToLength:
+  Description: 'Warns on calling #length on objects instead of #size'
+  Enabled: true
+  VersionAdded: '0.1.0'

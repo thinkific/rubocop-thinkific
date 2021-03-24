@@ -14,3 +14,7 @@ RSpec.configure do |config|
   config.order = :random
   Kernel.srand config.seed
 end
+
+def warning_msg(text, msg, offset = 0)
+  "#{' ' * offset}#{'^' * (text.size - offset)} #{msg}"
+end
