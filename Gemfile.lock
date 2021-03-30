@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     rubocop-thinkific (0.1.0)
-      rubocop (~> 1.11)
+      rubocop (~> 1.9.1)
 
 GEM
   remote: https://rubygems.org/
@@ -34,7 +34,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.2)
-    rubocop (1.11.0)
+    rubocop (1.9.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
