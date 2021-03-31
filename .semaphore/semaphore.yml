@@ -45,3 +45,22 @@ blocks:
       jobs:
         - name: Rspec
           commands: ['bundle exec rake spec']
+  - name: Rubocop
+    execution_time_limit:
+      minutes: 15
+    dependencies: ['Build Dependencies']
+    task:
+      env_vars:
+        - name: BUNDLE_PATH
+          value: vendor/bundle
+      prologue:
+        commands:
+          - checkout
+          - sem-version ruby $(cat .ruby-version)
+          - gem install bundler -v 1.17.3
+          - GEMS_CHECKSUM="$(checksum Gemfile.lock)"
+          - cache restore gems-$SEMAPHORE_PROJECT_NAME-$SEMAPHORE_GIT_BRANCH-$GEMS_CHECKSUM,gems-$SEMAPHORE_PROJECT_NAME-$SEMAPHORE_GIT_BRANCH,gems-$SEMAPHORE_PROJECT_NAME
+          - bundle install --deployment -j4
+      jobs:
+        - name: Rubocop
+          commands: ['bundle exec rake rubocop']
