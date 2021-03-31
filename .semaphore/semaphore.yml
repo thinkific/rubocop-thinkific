@@ -1,5 +1,5 @@
 version: v1.0
-name: Initial Pipeline
+name: Main
 agent:
   machine:
     type: e1-standard-2
@@ -14,8 +14,6 @@ fail_fast:
     when: "branch != 'main'"
 blocks:
   - name: Build Dependencies
-    execution_time_limit:
-      minutes: 15
     dependencies: []
     task:
       prologue:
@@ -27,8 +25,6 @@ blocks:
               value: vendor/bundle
           commands_file: commands/bundle-dependencies
   - name: RSpec
-    execution_time_limit:
-      minutes: 15
     dependencies: ['Build Dependencies']
     task:
       env_vars:
@@ -40,8 +36,6 @@ blocks:
         - name: Rspec
           commands: ['bundle exec rake spec']
   - name: Rubocop
-    execution_time_limit:
-      minutes: 15
     dependencies: ['Build Dependencies']
     task:
       env_vars:
