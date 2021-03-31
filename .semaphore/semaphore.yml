@@ -6,12 +6,12 @@ agent:
     os_image: ubuntu1804
 auto_cancel:
   queued:
-    when: "branch = 'staging' OR branch = 'master'"
+    when: "branch = 'main'"
   running:
-    when: "branch != 'master' AND branch != 'staging'"
+    when: "branch != 'main'"
 fail_fast:
   stop:
-    when: "branch != 'master' AND branch !~ 'skipff$'"
+    when: "branch != 'main'"
 blocks:
   - name: Build Dependencies
     execution_time_limit:
