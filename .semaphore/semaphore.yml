@@ -4,10 +4,25 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+auto_cancel:
+  queued:
+    when: "branch = 'staging' OR branch = 'master'"
+  running:
+    when: "branch != 'master' AND branch != 'staging'"
+fail_fast:
+  stop:
+    when: "branch != 'master' AND branch !~ 'skipff$'"
 blocks:
-  - name: 'Block #1'
+  - name: Build Dependencies
+    execution_time_limit:
+      minutes: 20
+    dependencies: []
     task:
+      prologue:
+        commands: [checkout]
       jobs:
-        - name: 'Job #1'
-          commands:
-            - checkout
+        - name: Bundle
+          env_vars:
+            - name: BUNDLE_PATH
+              value: vendor/bundle
+          commands_file: commands/bundle-dependencies
