@@ -1,0 +1,2 @@
+sem-version node $(cat .nvmrc)
+BRANCH_NAME=$SEMAPHORE_GIT_BRANCH npx @thinkific/gambier release

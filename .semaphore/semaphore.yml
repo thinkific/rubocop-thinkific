@@ -1,13 +1,54 @@
 version: v1.0
-name: Initial Pipeline
+name: Main
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+auto_cancel:
+  queued:
+    when: "branch = 'main'"
+  running:
+    when: "branch != 'main'"
+fail_fast:
+  stop:
+    when: "branch != 'main'"
 blocks:
-  - name: 'Block #1'
+  - name: Build Dependencies
+    dependencies: []
     task:
+      env_vars:
+        - name: BUNDLE_PATH
+          value: vendor/bundle
+      prologue:
+        commands_file: commands/prologue-common
       jobs:
-        - name: 'Job #1'
+        - name: Bundle
           commands:
-            - checkout
+            - cache store gems-$SEMAPHORE_PROJECT_NAME-$SEMAPHORE_GIT_BRANCH-$GEMS_CHECKSUM vendor/bundle
+  - name: RSpec
+    dependencies: ['Build Dependencies']
+    task:
+      env_vars:
+        - name: BUNDLE_PATH
+          value: vendor/bundle
+      prologue:
+        commands_file: commands/prologue-common
+      jobs:
+        - name: Rspec
+          commands: ['bundle exec rake spec']
+  - name: Rubocop
+    dependencies: ['Build Dependencies']
+    task:
+      env_vars:
+        - name: BUNDLE_PATH
+          value: vendor/bundle
+      prologue:
+        commands_file: commands/prologue-common
+      jobs:
+        - name: Rubocop
+          commands: ['bundle exec rake rubocop']
+promotions:
+  - name: Release
+    auto_promote:
+      when: "result = 'passed' AND branch = 'main'"
+    pipeline_file: release.yml
