@@ -16,14 +16,15 @@ blocks:
   - name: Build Dependencies
     dependencies: []
     task:
+      env_vars:
+        - name: BUNDLE_PATH
+          value: vendor/bundle
       prologue:
-        commands: [checkout]
+        commands_file: commands/prologue-common
       jobs:
         - name: Bundle
-          env_vars:
-            - name: BUNDLE_PATH
-              value: vendor/bundle
-          commands_file: commands/bundle-dependencies
+          commands:
+            - cache store gems-$SEMAPHORE_PROJECT_NAME-$SEMAPHORE_GIT_BRANCH-$GEMS_CHECKSUM vendor/bundle
   - name: RSpec
     dependencies: ['Build Dependencies']
     task:
