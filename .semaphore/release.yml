@@ -1,22 +1,22 @@
-version: v1.0
-name: Release
-agent:
-  machine:
-    type: e1-standard-2
-    os_image: ubuntu1804
-blocks:
-  - name: Release
-    skip:
-      when: "branch != 'main'"
-    task:
-      env_vars:
-        - name: BUNDLE_PATH
-          value: vendor/bundle
-      prologue:
-        commands_file: commands/prologue-common
-      secrets:
-        - name: github
-        - name: npm
-      jobs:
-        - name: Release
-          commands_file: commands/release
+# version: v1.0
+# name: Release
+# agent:
+#   machine:
+#     type: e1-standard-2
+#     os_image: ubuntu1804
+# blocks:
+#   - name: Release
+#     skip:
+#       when: "branch != 'main'"
+#     task:
+#       env_vars:
+#         - name: BUNDLE_PATH
+#           value: vendor/bundle
+#       prologue:
+#         commands_file: commands/prologue-common
+#       secrets:
+#         - name: github
+#         - name: npm
+#       jobs:
+#         - name: Release
+#           commands_file: commands/release

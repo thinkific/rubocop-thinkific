@@ -47,8 +47,8 @@ blocks:
       jobs:
         - name: Rubocop
           commands: ['bundle exec rake rubocop']
-promotions:
-  - name: Release
-    auto_promote:
-      when: "result = 'passed' AND branch = 'main'"
-    pipeline_file: release.yml
+# promotions:
+#   - name: Release
+#     auto_promote:
+#       when: "result = 'passed' AND branch = 'main'"
+#     pipeline_file: release.yml
