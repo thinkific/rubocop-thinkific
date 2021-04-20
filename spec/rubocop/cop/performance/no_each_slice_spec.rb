@@ -36,6 +36,17 @@ RSpec.describe RuboCop::Cop::Performance::NoEachSlice, :config do
             end
           RUBY
         end
+
+        it 'fails when method accepts param' do
+          expect_offense(<<~RUBY)
+            CSV.generate(options) do |csv|
+              tenant_ids.#{meth}(BATCH_SIZE) do |tenant_batch_ids|
+              #{warning_msg("tenant_ids.#{meth}(BATCH_SIZE)", msg)}
+                break if cancelled?
+              end
+            end
+          RUBY
+        end
       end
     end
   end

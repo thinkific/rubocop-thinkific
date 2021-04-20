@@ -31,7 +31,7 @@ module RuboCop
         RESTRICT_ON_SEND = %i[each_slice].freeze
 
         def_node_matcher :bad_method?, <<~PATTERN
-          (send $_ :each_slice)
+          (send $_ :each_slice _?)
         PATTERN
 
         def on_send(node)
