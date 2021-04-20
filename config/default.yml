@@ -1,3 +1,8 @@
+Performance/NoEachSlice:
+  Description: 'Warns on calling #each_slice'
+  Enabled: true
+  VersionAdded: '0.2.0'
+
 Performance/PreferSizeToLength:
   Description: 'Warns on calling #length on objects instead of #size'
   Enabled: true
