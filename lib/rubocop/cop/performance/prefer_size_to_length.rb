@@ -26,6 +26,7 @@ module RuboCop
           For objects inheriting from ActiveRecord::Collection::Relation,
           use #size instead of #length'
         MSG
+        RESTRICT_ON_SEND = %i[length send].freeze
 
         def_node_matcher :ends_with_length?, <<~PATTERN
           (send $_ :length)
