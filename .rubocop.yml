@@ -11,5 +11,8 @@ Naming/FileName:
   Exclude:
     - lib/rubocop-thinkific.rb
 
+RSpec/ExampleLength:
+  Max: 10
+
 AllCops:
   NewCops: enable
